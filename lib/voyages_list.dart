@@ -1,12 +1,12 @@
-import 'package:challenge_3/voyage.dart';
+import 'package:challenge_3/model/voyage.dart';
 import 'package:challenge_3/pages/register_voyage_page.dart';
 import 'package:flutter/material.dart';
 
 class VoyagesList extends StatefulWidget {
   void Function(Voyage) onConfirmVoyage;
-  List<Voyage> voyages;
+  List<Voyage> voyageList;
 
-  VoyagesList({Key? key, required this.voyages, required this.onConfirmVoyage}) : super(key: key);
+  VoyagesList({Key? key, required this.voyageList, required this.onConfirmVoyage}) : super(key: key);
 
   @override
   State<VoyagesList> createState() => _VoyagesListState();
@@ -22,16 +22,18 @@ class _VoyagesListState extends State<VoyagesList> {
         const Padding(
           padding: EdgeInsets.only(bottom: 8),
           child: Text(
-            'Registered voyages:',
+            'Upcoming voyages:',
             style: TextStyle(fontSize: 20),
           ),
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: widget.voyages.length,
+          itemCount: widget.voyageList.length,
           itemBuilder: (context, i) {
+            Voyage voyage = widget.voyageList[i];
             return ListTile(
-              title: Text('Capacity: ${widget.voyages[i].capacity}'),
+              title: Text('Destination: ${voyage.destination}, capacity: ${voyage.capacityBeforeExtraCargo} tonnes, arrival date: ${voyage.arrivalDate.year}-${voyage.arrivalDate.month}-${voyage.arrivalDate.day}'),
+              onTap: () {},
             );
           },
         ),

@@ -1,13 +1,13 @@
-import 'package:challenge_3/cargo.dart';
+import 'package:challenge_3/model/cargo.dart';
 import 'package:challenge_3/pages/register_cargo_page.dart';
 import 'package:challenge_3/pages/register_voyage_page.dart';
 import 'package:flutter/material.dart';
 
 class CargoList extends StatefulWidget {
   void Function(Cargo) onConfirmCargo;
-  List<Cargo> cargo_list;
+  List<Cargo> cargoList;
 
-  CargoList({Key? key, required this.onConfirmCargo, required this.cargo_list}) : super(key: key);
+  CargoList({Key? key, required this.onConfirmCargo, required this.cargoList}) : super(key: key);
 
   @override
   State<CargoList> createState() => _CargoListState();
@@ -23,16 +23,18 @@ class _CargoListState extends State<CargoList> {
         const Padding(
           padding: EdgeInsets.only(bottom: 8),
           child: Text(
-            'Registered cargo:',
+            'Cargo to be shipped:',
             style: TextStyle(fontSize: 20),
           ),
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: widget.cargo_list.length,
+          itemCount: widget.cargoList.length,
           itemBuilder: (context, i) {
+            Cargo cargo = widget.cargoList[i];
             return ListTile(
-              title: Text('Size: ${widget.cargo_list[i].size}, weight: ${widget.cargo_list[i].weight}'),
+              title: Text('Weight: ${cargo.weight} tonnes, destination: ${cargo.destination}, due date: ${cargo.dueDate.year}-${cargo.dueDate.month}-${cargo.dueDate.day}'),
+              onTap: () {},
             );
           },
         ),
