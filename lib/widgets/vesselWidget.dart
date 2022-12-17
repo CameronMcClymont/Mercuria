@@ -23,6 +23,11 @@ class _VesselWidgetState extends State<VesselWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              widget.voyage.vesselName,
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 4),
             Row(
               children: [
                 const Icon(Icons.directions),
@@ -37,17 +42,18 @@ class _VesselWidgetState extends State<VesselWidget> {
                 Text('Arriving on: ${widget.voyage.arrivalDate.year}-${widget.voyage.arrivalDate.month}-${widget.voyage.arrivalDate.day}'),
               ],
             ),
-            if (widget.voyage.capacityAfterExtraCargo != null) Row(
-              children: [
-                const Icon(Icons.space_bar),
-                const SizedBox(width: 4),
-                Text('Capacity change: ${widget.voyage.capacityBeforeExtraCargo} -> ${widget.voyage.capacityAfterExtraCargo}'),
-              ],
-            ),
+            if (widget.voyage.capacityAfterExtraCargo != null)
+              Row(
+                children: [
+                  const Icon(Icons.space_bar),
+                  const SizedBox(width: 4),
+                  Text('Capacity change: ${widget.voyage.capacityBeforeExtraCargo} -> ${widget.voyage.capacityAfterExtraCargo}'),
+                ],
+              ),
             MasonryGridView.count(
               shrinkWrap: true,
               itemCount: widget.cargoList.length,
-              crossAxisCount: 3,
+              crossAxisCount: 2,
               mainAxisSpacing: 4,
               crossAxisSpacing: 4,
               itemBuilder: (_, j) {

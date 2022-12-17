@@ -47,7 +47,9 @@ class _MatchPageState extends State<MatchPage> {
 
               for (Cargo cargo in cargoList) {
                 bool arrivesInTime = voyage.arrivalDate.isBefore(cargo.dueDate) || voyage.arrivalDate == cargo.dueDate;
-                if (arrivesInTime && voyage.capacityBeforeExtraCargo >= cargo.weight) {
+                bool sufficientCapacity = voyage.capacityBeforeExtraCargo >= cargo.weight;
+                bool destinationMatches = voyage.destination.toLowerCase() == cargo.destination.toLowerCase();
+                if (arrivesInTime && sufficientCapacity && destinationMatches) {
                   // 'Load' the cargo
                   voyage.capacityAfterExtraCargo = voyage.capacityAfterExtraCargo! - cargo.weight;
                   cargoToRemove.add(cargo);
@@ -164,7 +166,7 @@ class _MatchPageState extends State<MatchPage> {
                   MasonryGridView.count(
                     shrinkWrap: true,
                     itemCount: cargoList.length,
-                    crossAxisCount: 6,
+                    crossAxisCount: 4,
                     mainAxisSpacing: 4,
                     crossAxisSpacing: 4,
                     itemBuilder: (_, i) {

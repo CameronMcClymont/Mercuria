@@ -22,6 +22,13 @@ class _CargoWidgetState extends State<CargoWidget> {
           children: [
             Row(
               children: [
+                const Icon(Icons.directions),
+                const SizedBox(width: 4),
+                Text('Destination: ${widget.cargo.destination}'),
+              ],
+            ),
+            Row(
+              children: [
                 const Icon(Icons.calendar_month),
                 const SizedBox(width: 4),
                 Text('Due date: ${widget.cargo.dueDate.year}-${widget.cargo.dueDate.month}-${widget.cargo.dueDate.day}'),

@@ -12,11 +12,13 @@ class RegisterVoyagePage extends StatefulWidget {
 }
 
 class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
+  late TextEditingController nameController;
   late TextEditingController destController;
   late TextEditingController capacityController;
   DateTime? arrivalDate;
 
   void _onConfirm() {
+    String name = nameController.text;
     String dest = destController.text;
 
     double? capacity = double.tryParse(capacityController.text);
@@ -30,19 +32,21 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
       return;
     }
 
-    widget.onConfirm(Voyage(dest, capacity, null, arrivalDate!));
+    widget.onConfirm(Voyage(name, dest, capacity, null, arrivalDate!));
     Navigator.pop(context);
   }
 
   @override
   void initState() {
     super.initState();
+    nameController = TextEditingController();
     destController = TextEditingController();
     capacityController = TextEditingController();
   }
 
   @override
   void dispose() {
+    nameController.dispose();
     destController.dispose();
     capacityController.dispose();
     super.dispose();
@@ -63,6 +67,10 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
             children: <Widget>[
               TextField(
                 autofocus: true,
+                controller: nameController,
+                decoration: const InputDecoration(labelText: 'Vessel Name'),
+              ),
+              TextField(
                 controller: destController,
                 decoration: const InputDecoration(labelText: 'Voyage Destination'),
               ),

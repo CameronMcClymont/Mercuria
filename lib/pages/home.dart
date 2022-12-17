@@ -1,6 +1,6 @@
-import 'package:challenge_3/model/cargo.dart';
 import 'package:challenge_3/cargo_list.dart';
 import 'package:challenge_3/match_page.dart';
+import 'package:challenge_3/model/cargo.dart';
 import 'package:challenge_3/model/voyage.dart';
 import 'package:challenge_3/voyages_list.dart';
 import 'package:flutter/material.dart';
@@ -13,18 +13,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Voyage> voyage_list = [Voyage('test', 123, null, DateTime.now())];
-  List<Cargo> cargo_list = [Cargo(1, 'test', DateTime.now()), Cargo(2, 'test', DateTime.now())];
+  List<Voyage> voyageList = [Voyage('Hunter', 'Cape Town, South Africa', 23, null, DateTime.now())];
+  List<Cargo> cargoList = [
+    Cargo(4, 'Cape Town, South Africa', DateTime.now()),
+    Cargo(7, 'Cape Town, South Africa', DateTime.now()),
+    Cargo(2, 'Singapore', DateTime.now().add(const Duration(days: 2))),
+  ];
 
   void _onConfirmVoyage(Voyage voyage) {
     setState(() {
-      voyage_list.add(voyage);
+      voyageList.add(voyage);
     });
   }
 
   void _onConfirmCargo(Cargo cargo) {
     setState(() {
-      cargo_list.add(cargo);
+      cargoList.add(cargo);
     });
   }
 
@@ -45,7 +49,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.all(16),
                   child: VoyagesList(
                     onConfirmVoyage: _onConfirmVoyage,
-                    voyageList: voyage_list,
+                    voyageList: voyageList,
                   ),
                 ),
               ),
@@ -54,7 +58,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.all(16),
                   child: CargoList(
                     onConfirmCargo: _onConfirmCargo,
-                    cargoList: cargo_list,
+                    cargoList: cargoList,
                   ),
                 ),
               ),
@@ -65,7 +69,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MatchPage(voyageList: voyage_list, cargoList: cargo_list)),
+                MaterialPageRoute(builder: (context) => MatchPage(voyageList: voyageList, cargoList: cargoList)),
               );
             },
             child: const Padding(
