@@ -13,11 +13,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Voyage> voyageList = [Voyage('Hunter', 'Cape Town, South Africa', 23, null, DateTime.now().add(const Duration(days: 1)))];
+  List<Voyage> voyageList = [
+    Voyage('Destroyer', 'Cape Town, South Africa', 23, null, DateTime.now().add(const Duration(days: 1))),
+    Voyage('HMS Mercuria', 'Singapore', 3, null, DateTime.now()),
+  ];
   List<Cargo> cargoList = [
     Cargo(4, 'Cape Town, South Africa', DateTime.now().add(const Duration(days: 1))),
     Cargo(7, 'Cape Town, South Africa', DateTime.now().add(const Duration(days: 1))),
-    Cargo(2, 'Singapore', DateTime.now().add(const Duration(days: 2))),
+    Cargo(4, 'Mars', DateTime.now().add(const Duration(days: 2))),
+    Cargo(3, 'Singapore', DateTime.now().add(const Duration(days: 4))),
     Cargo(3, 'Cape Town, South Africa', DateTime.now()),
     Cargo(32, 'Cape Town, South Africa', DateTime.now().add(const Duration(days: 4))),
   ];
