@@ -36,39 +36,43 @@ class _MatchPageState extends State<MatchPage> {
               return const Center(child: Text('No cargo yet.'));
             }
 
-            List<Voyage> voyageList = List.of(widget.voyageList.map((voyage) => Voyage.clone(voyage))).toList();
-            List<Cargo> cargoList = List.of(widget.cargoList.map((cargo) => Cargo.clone(cargo))).toList();
+            if (matched) {
+              List<Voyage> voyageList = List.of(widget.voyageList.map((voyage) => Voyage.clone(voyage))).toList();
+              List<Cargo> cargoList = List.of(widget.cargoList.map((cargo) => Cargo.clone(cargo))).toList();
 
-            Map<Voyage, List<Cargo>> cargoAssignments = {};
+              Map<Voyage, List<Cargo>> cargoAssignments = {};
 
-            for (Voyage voyage in voyageList) {
-              List<Cargo> cargoToRemove = [];
-              voyage.capacityAfterExtraCargo = voyage.capacityBeforeExtraCargo;
+              for (Voyage voyage in voyageList) {
+                List<Cargo> cargoToRemove = [];
+                voyage.weightCapacityAfterExtraCargo = voyage.weightCapacityBeforeExtraCargo;
+                voyage.spaceCapacityAfterExtraCargo = voyage.spaceCapacityBeforeExtraCargo;
 
-              for (Cargo cargo in cargoList) {
-                bool arrivesInTime = voyage.arrivalDate.isBefore(cargo.dueDate) || voyage.arrivalDate == cargo.dueDate;
-                bool sufficientCapacity = voyage.capacityBeforeExtraCargo >= cargo.weight;
-                bool destinationMatches = voyage.destination.toLowerCase() == cargo.destination.toLowerCase();
-                if (arrivesInTime && sufficientCapacity && destinationMatches) {
-                  // 'Load' the cargo
-                  voyage.capacityAfterExtraCargo = voyage.capacityAfterExtraCargo! - cargo.weight;
-                  cargoToRemove.add(cargo);
+                for (Cargo cargo in cargoList) {
+                  bool destinationMatches = voyage.destination.toLowerCase() == cargo.destination.toLowerCase();
+                  bool arrivesInTime = voyage.arrivalDate.isBefore(cargo.dueDate) || voyage.arrivalDate == cargo.dueDate;
+                  bool sufficientWeightCapacity = voyage.weightCapacityAfterExtraCargo! >= cargo.weight;
+                  bool sufficientSpaceCapacity = voyage.spaceCapacityAfterExtraCargo! >= 1;
 
-                  // Assign it to this voyage
-                  if (cargoAssignments.containsKey(voyage)) {
-                    cargoAssignments[voyage]!.add(cargo);
-                  } else {
-                    cargoAssignments[voyage] = [cargo];
+                  if (destinationMatches && arrivesInTime && sufficientWeightCapacity && sufficientSpaceCapacity) {
+                    // 'Load' the cargo
+                    voyage.weightCapacityAfterExtraCargo = voyage.weightCapacityAfterExtraCargo! - cargo.weight;
+                    voyage.spaceCapacityAfterExtraCargo = voyage.spaceCapacityAfterExtraCargo! - 1;
+                    cargoToRemove.add(cargo);
+
+                    // Assign it to this voyage
+                    if (cargoAssignments.containsKey(voyage)) {
+                      cargoAssignments[voyage]!.add(cargo);
+                    } else {
+                      cargoAssignments[voyage] = [cargo];
+                    }
                   }
+                }
+
+                for (Cargo cargo in cargoToRemove) {
+                  cargoList.remove(cargo);
                 }
               }
 
-              for (Cargo cargo in cargoToRemove) {
-                cargoList.remove(cargo);
-              }
-            }
-
-            if (matched) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

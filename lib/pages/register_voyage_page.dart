@@ -14,16 +14,23 @@ class RegisterVoyagePage extends StatefulWidget {
 class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
   late TextEditingController nameController;
   late TextEditingController destController;
-  late TextEditingController capacityController;
+  late TextEditingController weightController;
+  late TextEditingController spaceController;
   DateTime? arrivalDate;
 
   void _onConfirm() {
     String name = nameController.text;
     String dest = destController.text;
 
-    double? capacity = double.tryParse(capacityController.text);
-    if (capacity == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Value: "${capacityController.text}" is invalid.'), duration: const Duration(seconds: 2)));
+    double? weight = double.tryParse(weightController.text);
+    if (weight == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Weight: "${weightController.text}" is invalid.'), duration: const Duration(seconds: 2)));
+      return;
+    }
+
+    int? space = int.tryParse(spaceController.text);
+    if (space == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Space: "${spaceController.text}" is invalid.'), duration: const Duration(seconds: 2)));
       return;
     }
 
@@ -32,7 +39,7 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
       return;
     }
 
-    widget.onConfirm(Voyage(name, dest, capacity, null, arrivalDate!));
+    widget.onConfirm(Voyage(name, dest, weight, null, space, null, arrivalDate!));
     Navigator.pop(context);
   }
 
@@ -41,14 +48,14 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
     super.initState();
     nameController = TextEditingController();
     destController = TextEditingController();
-    capacityController = TextEditingController();
+    weightController = TextEditingController();
   }
 
   @override
   void dispose() {
     nameController.dispose();
     destController.dispose();
-    capacityController.dispose();
+    weightController.dispose();
     super.dispose();
   }
 
@@ -75,8 +82,12 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
                 decoration: const InputDecoration(labelText: 'Voyage Destination'),
               ),
               TextField(
-                controller: capacityController,
-                decoration: const InputDecoration(labelText: 'Available Cargo Capacity', hintText: '4.2 (metric tons)'),
+                controller: weightController,
+                decoration: const InputDecoration(labelText: 'Available Capacity (Weight)', hintText: '4.2 (metric tons)'),
+              ),
+              TextField(
+                controller: spaceController,
+                decoration: const InputDecoration(labelText: 'Available Capacity (Space)', hintText: '3 (units)'),
               ),
               const SizedBox(height: 16),
               TextButton(

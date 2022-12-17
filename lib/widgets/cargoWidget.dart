@@ -1,5 +1,4 @@
 import 'package:challenge_3/model/cargo.dart';
-import 'package:challenge_3/model/voyage.dart';
 import 'package:flutter/material.dart';
 
 class CargoWidget extends StatefulWidget {

@@ -42,24 +42,46 @@ class _VesselWidgetState extends State<VesselWidget> {
                 Text('Arriving on: ${widget.voyage.arrivalDate.year}-${widget.voyage.arrivalDate.month}-${widget.voyage.arrivalDate.day}'),
               ],
             ),
-            if (widget.voyage.capacityAfterExtraCargo != null)
+            if (widget.voyage.weightCapacityAfterExtraCargo != null)
+              Row(
+                children: [
+                  const Icon(Icons.border_outer),
+                  const SizedBox(width: 4),
+                  Text('Capacity change (weight): ${widget.voyage.weightCapacityBeforeExtraCargo} -> ${widget.voyage.weightCapacityAfterExtraCargo}'),
+                ],
+              ),
+            if (widget.voyage.spaceCapacityAfterExtraCargo != null)
               Row(
                 children: [
                   const Icon(Icons.space_bar),
                   const SizedBox(width: 4),
-                  Text('Capacity change: ${widget.voyage.capacityBeforeExtraCargo} -> ${widget.voyage.capacityAfterExtraCargo}'),
+                  Text('Capacity change (space): ${widget.voyage.spaceCapacityBeforeExtraCargo} -> ${widget.voyage.spaceCapacityAfterExtraCargo}'),
                 ],
               ),
-            MasonryGridView.count(
-              shrinkWrap: true,
-              itemCount: widget.cargoList.length,
-              crossAxisCount: 2,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              itemBuilder: (_, j) {
-                return CargoWidget(cargo: widget.cargoList[j]);
-              },
+            const SizedBox(height: 12),
+            const Text(
+              'Extra Cargo',
+              style: TextStyle(fontSize: 16),
             ),
+            const SizedBox(height: 4),
+            Builder(
+              builder: (_) {
+                if (widget.cargoList.isEmpty) {
+                  return const Text('No extra cargo');
+                } else {
+                  return MasonryGridView.count(
+                    shrinkWrap: true,
+                    itemCount: widget.cargoList.length,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    itemBuilder: (_, j) {
+                      return CargoWidget(cargo: widget.cargoList[j]);
+                    },
+                  );
+                }
+              },
+            )
           ],
         ),
       ),

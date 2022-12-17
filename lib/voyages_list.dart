@@ -32,7 +32,7 @@ class _VoyagesListState extends State<VoyagesList> {
           itemBuilder: (context, i) {
             Voyage voyage = widget.voyageList[i];
             return ListTile(
-              title: Text('Destination: ${voyage.destination}, capacity: ${voyage.capacityBeforeExtraCargo} tonnes, arrival date: ${voyage.arrivalDate.year}-${voyage.arrivalDate.month}-${voyage.arrivalDate.day}'),
+              title: Text('Destination: ${voyage.destination}, capacity (weight): ${voyage.weightCapacityBeforeExtraCargo} tonnes, arrival date: ${voyage.arrivalDate.year}-${voyage.arrivalDate.month}-${voyage.arrivalDate.day}'),
               onTap: () {},
             );
           },
