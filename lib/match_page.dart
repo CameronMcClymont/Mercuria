@@ -17,7 +17,7 @@ class MatchPage extends StatefulWidget {
 
 class _MatchPageState extends State<MatchPage> {
   int tempPage = 1;
-  bool matched = false;
+  bool matched = true;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class _MatchPageState extends State<MatchPage> {
                         return MasonryGridView.count(
                           shrinkWrap: true,
                           itemCount: cargoList.length,
-                          crossAxisCount: 6,
+                          crossAxisCount: 4,
                           mainAxisSpacing: 4,
                           crossAxisSpacing: 4,
                           itemBuilder: (_, i) {

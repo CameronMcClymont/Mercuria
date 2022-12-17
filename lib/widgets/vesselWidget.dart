@@ -27,7 +27,7 @@ class _VesselWidgetState extends State<VesselWidget> {
               widget.voyage.vesselName,
               style: const TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Row(
               children: [
                 const Icon(Icons.directions),

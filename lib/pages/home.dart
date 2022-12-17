@@ -13,11 +13,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Voyage> voyageList = [Voyage('Hunter', 'Cape Town, South Africa', 23, null, DateTime.now())];
+  List<Voyage> voyageList = [Voyage('Hunter', 'Cape Town, South Africa', 23, null, DateTime.now().add(const Duration(days: 1)))];
   List<Cargo> cargoList = [
-    Cargo(4, 'Cape Town, South Africa', DateTime.now()),
-    Cargo(7, 'Cape Town, South Africa', DateTime.now()),
+    Cargo(4, 'Cape Town, South Africa', DateTime.now().add(const Duration(days: 1))),
+    Cargo(7, 'Cape Town, South Africa', DateTime.now().add(const Duration(days: 1))),
     Cargo(2, 'Singapore', DateTime.now().add(const Duration(days: 2))),
+    Cargo(3, 'Cape Town, South Africa', DateTime.now()),
+    Cargo(32, 'Cape Town, South Africa', DateTime.now().add(const Duration(days: 4))),
   ];
 
   void _onConfirmVoyage(Voyage voyage) {
@@ -64,20 +66,20 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MatchPage(voyageList: voyageList, cargoList: cargoList)),
-              );
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(8),
-              child: Text('Match!'),
-            ),
-          ),
         ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(16),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MatchPage(voyageList: voyageList, cargoList: cargoList)),
+            );
+          },
+          tooltip: 'Match',
+          child: const Icon(Icons.compare_arrows),
+        ),
       ),
     );
   }
