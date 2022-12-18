@@ -49,6 +49,7 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
     nameController = TextEditingController();
     destController = TextEditingController();
     weightController = TextEditingController();
+    spaceController = TextEditingController();
   }
 
   @override
@@ -56,6 +57,7 @@ class _RegisterVoyagePageState extends State<RegisterVoyagePage> {
     nameController.dispose();
     destController.dispose();
     weightController.dispose();
+    spaceController.dispose();
     super.dispose();
   }
 

@@ -40,7 +40,7 @@ class _MatchPageState extends State<MatchPage> {
               List<Voyage> voyageList = List.of(widget.voyageList.map((voyage) => Voyage.clone(voyage))).toList();
               List<Cargo> cargoList = List.of(widget.cargoList.map((cargo) => Cargo.clone(cargo))).toList();
 
-              Map<Voyage, List<Cargo>> cargoAssignments = {};
+              Map<Voyage, List<Cargo>> voyageAssignments = {};
 
               for (Voyage voyage in voyageList) {
                 List<Cargo> cargoToRemove = [];
@@ -60,10 +60,10 @@ class _MatchPageState extends State<MatchPage> {
                     cargoToRemove.add(cargo);
 
                     // Assign it to this voyage
-                    if (cargoAssignments.containsKey(voyage)) {
-                      cargoAssignments[voyage]!.add(cargo);
+                    if (voyageAssignments.containsKey(voyage)) {
+                      voyageAssignments[voyage]!.add(cargo);
                     } else {
-                      cargoAssignments[voyage] = [cargo];
+                      voyageAssignments[voyage] = [cargo];
                     }
                   }
                 }
@@ -107,52 +107,15 @@ class _MatchPageState extends State<MatchPage> {
                   const SizedBox(height: 16),
                   MasonryGridView.count(
                     shrinkWrap: true,
-                    itemCount: cargoAssignments.entries.length,
+                    itemCount: voyageAssignments.entries.length,
                     crossAxisCount: 2,
                     mainAxisSpacing: 3,
                     crossAxisSpacing: 4,
                     itemBuilder: (_, i) {
-                      List entries = cargoAssignments.entries.toList();
+                      List entries = voyageAssignments.entries.toList();
                       return VesselWidget(voyage: entries[i].key, cargoList: entries[i].value);
                     },
                   ),
-                  const SizedBox(height: 16),
-                  // FutureBuilder<http.Response>(
-                  //   future: http.get(
-                  //     Uri.parse('https://api.hackathon.mercuria-apps.com/api/ais-hourly/?page=$tempPage'),
-                  //     headers: {
-                  //       // Todo: security of API token
-                  //       HttpHeaders.authorizationHeader: 'Token 9ca61ddaff632398f35fcaa19348fec9b3fbd449',
-                  //     },
-                  //   ),
-                  //   builder: (_, AsyncSnapshot<http.Response> response) {
-                  //     if (response.hasData) {
-                  //       try {
-                  //         final body = json.decode(response.data!.body);
-                  //         return Text('Data (${body['results'].length} results, ${body["count"]}): ${body['results'][800]}');
-                  //       } catch (e) {
-                  //         return Text('Error: $e');
-                  //       }
-                  //     } else if (response.hasError) {
-                  //       return Text('Error: ${response.error}');
-                  //     } else {
-                  //       return LoadingAnimationWidget.waveDots(
-                  //         color: Theme.of(context).primaryColor,
-                  //         size: 40,
-                  //       );
-                  //     }
-                  //   },
-                  // ),
-                  // TextField(
-                  //   autofocus: true,
-                  //   textInputAction: TextInputAction.go,
-                  //   decoration: const InputDecoration(labelText: 'Update page'),
-                  //   onSubmitted: (String value) {
-                  //     setState(() {
-                  //       tempPage = int.parse(value);
-                  //     });
-                  //   },
-                  // ),
                 ],
               );
             } else {
